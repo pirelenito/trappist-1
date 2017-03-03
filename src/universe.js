@@ -1,4 +1,5 @@
 import React from 'react'
+import {Motion, spring} from 'react-motion'
 import PlanetarySystem from './planetary-system'
 
 const style = {
@@ -35,21 +36,41 @@ export default React.createClass({
 
     const newScale = this.state.scale - e.deltaY * 0.001
 
-    if (newScale < 0.1 || newScale > 20) { return }
+    if (newScale < 0.1 || newScale > 40) { return }
 
     this.setState({ scale: newScale })
   },
 
   render () {
     const { x, y, scale, width, height } = this.state
-    const viewBox = `${x - (width * scale) / 2} ${y - (height * scale) / 2} ${width * scale} ${height * scale}`
 
     return (
-      <svg onClick={this.move} onWheel={this.scale} viewBox={viewBox} style={style} width={width} height={height} >
-        <g transform={'translate(0, 0)'}>
-          <PlanetarySystem />
-        </g>
-      </svg>
+      <Motion
+        defaultStyle={{
+          x: x,
+          y: y
+        }}
+        style={{
+          x: spring(x),
+          y: spring(y)
+        }}
+        >
+        {
+          (motion) => (
+            <svg
+              viewBox={`${motion.x - (width * scale) / 2} ${motion.y - (height * scale) / 2} ${width * scale} ${height * scale}`}
+              onClick={this.move}
+              onWheel={this.scale}
+              style={style}
+              width={width}
+              height={height} >
+              <g transform={'translate(0, 0)'}>
+                <PlanetarySystem />
+              </g>
+            </svg>
+          )
+        }
+      </Motion>
     )
   }
 })
