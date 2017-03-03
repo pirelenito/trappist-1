@@ -3,7 +3,7 @@ import React from 'react'
 const EARTH_RADIUS = 0.006371
 const SUN_RADIUS = 109 * EARTH_RADIUS
 
-const SCALE = 500
+const SCALE = 2000
 
 const star = {
   radius: SUN_RADIUS * 0.11
