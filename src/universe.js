@@ -23,6 +23,10 @@ export default React.createClass({
     }
   },
 
+  componentDidMount () {
+    window.addEventListener('resize', () => this.setState({ width: window.innerWidth, height: window.innerHeight }))
+  },
+
   move (e) {
     this.setState({
       x: this.state.x + this.state.scale * (e.pageX - this.state.width / 2),
